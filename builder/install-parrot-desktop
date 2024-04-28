@@ -1,7 +1,4 @@
-# Define ANSI color codes
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
-	
+
 rm /etc/apt/sources.list
 echo "deb http://mirrors.ustc.edu.cn/parrot parrot main contrib non-free" >> /etc/apt/sources.list
 echo "deb-src http://mirrors.ustc.edu.cn/parrot parrot main contrib non-free" >> /etc/apt/sources.list
