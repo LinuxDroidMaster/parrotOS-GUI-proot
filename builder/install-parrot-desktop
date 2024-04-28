@@ -228,19 +228,19 @@ setup_repositories(){
 	echo "127.0.0.1 localhost" > /etc/hosts
 	echo "nameserver 8.8.8.8" > /etc/resolv.conf
 	echo "nameserver 8.8.4.4" >> /etc/resolv.conf
-}
 
-install_parrot_packages(){
 	apt update -y
 	apt upgrade -y
-	apt install sudo parrot-apps-basics parrot-core
+	
+	apt install sudo base-files parrot-apps-basics parrot-core
+	
+	apt update -y
+	apt upgrade -y
 }
 
 package() {
 	banner
     echo -e "${R} [${W}-${R}]${C} Checking required packages..."${W}
-
-	setup_repositories
 
     apt install xfce4* -y
     apt install sudo -y
@@ -263,7 +263,6 @@ package() {
         }
     done
     sudo apt update -y
-	install_parrot_packages
 }
 
 fix_broken() {
@@ -291,64 +290,6 @@ chromium() {
     sudo apt install chromium -y
     sudo sed -i 's/chromium %U/chromium --no-sandbox %U/g' /usr/share/applications/chromium.desktop
     sudo apt-get upgrade -y
-}
-
-vnc() {
-	banner
-   	echo -e "${R} [${W}-${R}]${C} Setting up VNC Server..."${W}
-  	if [[ ! -d "$HOME/.vnc" ]]; then
-        mkdir -p "$HOME/.vnc"
-    fi
-   	if [[ -e "/usr/local/bin/vncstart" ]]; then
-        rm -rf /usr/local/bin/vncstart
-    fi
-  	echo "#!/usr/bin/env bash" >>/usr/local/bin/vncstart
-  	echo "dbus-launch" >>/usr/local/bin/vncstart
-  	echo "vncserver -geometry 1500x720  -xstartup /usr/bin/startxfce4" >>/usr/local/bin/vncstart
-    chmod +x /usr/local/bin/vncstart
- 	 if [[ -e "/usr/local/bin/vncstop" ]]; then
-        rm -rf /usr/local/bin/vncstop
-    fi
-  	echo "#!/usr/bin/env bash" >>/usr/local/bin/vncstop
-  	echo "vncserver -kill :*" >>/usr/local/bin/vncstop
-  	echo "rm -rf /username/.vnc/localhost:*.pid" >>/usr/local/bin/vncstop
-  	echo "rm -rf /tmp/.X1-lock" >>/usr/local/bin/vncstop
- 	echo "rm -rf /tmp/.X11-unix/X1" >>/usr/local/bin/vncstop
-    chmod +x /usr/local/bin/vncstop
- 	if [[ -e "/usr/local/bin/fixvnc" ]]; then
-        rm -rf /usr/local/bin/fixvnc
-    fi
- 	echo "pkill Xtigervnc" >>/usr/local/bin/fixvnc
- 	echo "LD_PRELOAD=/lib/aarch64-linux-gnu/libgcc_s.so.1 vncserver :1 -localhost no" >>/usr/local/bin/fixvnc
-    chmod +x /usr/local/bin/fixvnc
-
-    echo "export DISPLAY=":1"" >> /etc/profile
-    echo "export PULSE_SERVER=127.0.0.1" >> /etc/profile
-    source /etc/profile
-}
-
-note() {
-banner
-    echo -e " ${G} Successfully Installed !"${W}
-    sleep 1
-    echo
-    echo -e " ${G}Type ${C}vncstart${G} to run Vncserver."${W}
-    echo -e " ${G}Type ${C}vncstop${G} to stop Vncserver."${W}
-    echo
-    echo -e " ${C}Install VNC VIEWER Apk on your Device."${W}
-    echo
-    echo -e " ${C}Open VNC VIEWER & Click on + Button."${W}
-    echo
-    echo -e " ${C}Enter the Address localhost:1 & Name anything you like."${W}
-    echo
-    echo -e " ${C}Set the Picture Quality to High for better Quality."${W}
-    echo
-    echo -e " ${C}Click on Connect & Input the Password."${W}
-    echo
-    echo -e " ${C}Enjoy :D"${W}
-    echo
-    echo
-
 }
 
 add_sound() {
@@ -384,6 +325,8 @@ clenup() {
 
 login() {
     banner
+	setup_repositories
+
     read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Input Username [Lowercase] : \e[0m\e[1;96m\en' user
     echo -e "${W}"
     read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Input Password : \e[0m\e[1;96m\en' pass
