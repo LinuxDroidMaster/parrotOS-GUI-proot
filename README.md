@@ -19,18 +19,19 @@
 
 ## Installation:
 
-- Firstly install [Termux](https://termux.com) apk from [HERE](https://f-droid.org/repo/com.termux_118.apk)
-- Secondly Clone the Repository & Run the setup File
-
-  - `pkg update -y && pkg upgrade -y`
-  - `pkg install git wget -y`
-  - `wget https://raw.githubusercontent.com/LinuxDroidMaster/parrotOS-GUI-proot/main/setup-parrot-cli`
-  - `chmod +x setup-parrot-cli`
-  - `./setup-parrot-cli`
-  - `parrot`
-  - `./install-parrot-desktop`
-
-- **You have to note your VNC password !!**
+* Clone the Repository & run the commands: 
+```
+pkg update -y && pkg upgrade -y
+pkg install git wget -y
+git clone https://github.com/LinuxDroidMaster/parrotOS-GUI-proot
+cd parrotOS-GUI-proot
+chmod +x setup-parrot-cli
+./setup-parrot-cli
+```
+```
+#Inside parrot OS
+./install-parrot-desktop
+```
 
 - Parrot OS image is now successfully installed .
 - Enjoy :D
