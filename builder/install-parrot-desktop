@@ -231,7 +231,7 @@ setup_repositories(){
 
 	apt update -y
 	apt upgrade -y
-	
+
 	apt install sudo base-files parrot-apps-basics parrot-core
 	
 	apt update -y
@@ -341,14 +341,14 @@ login() {
 
 #full_update
 login
-package
-fix_broken
+#package
+#fix_broken
 extra_things
 #browser_installer
 #video_player_installer
 #chromium
-add_sound
-customize
+#add_sound
+#customize
 clenup
 #vnc
 #note
