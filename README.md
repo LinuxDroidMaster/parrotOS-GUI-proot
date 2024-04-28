@@ -24,7 +24,7 @@
 
   - `pkg update -y && pkg upgrade -y`
   - `pkg install git wget -y`
-  - `https://raw.githubusercontent.com/LinuxDroidMaster/parrotOS-GUI-proot/main/setup-parrot-cli`
+  - `wget https://raw.githubusercontent.com/LinuxDroidMaster/parrotOS-GUI-proot/main/setup-parrot-cli`
   - `chmod +x setup-parrot-cli`
   - `./setup-parrot-cli`
   - `parrot`
