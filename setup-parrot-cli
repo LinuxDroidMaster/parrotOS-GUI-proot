@@ -33,7 +33,7 @@ setup_rootfs(){
             echo "unknown architecture"; exit 1 ;;
     esac
 
-    base_url="https://raw.githubusercontent.com/risecid/AndronixOrigin/master/Rootfs/Parrot/$archtype/parrot-rootfs-$archtype.tar.xz"
+    base_url="https://raw.githubusercontent.com/EXALAB/Anlinux-Resources/master/Rootfs/Parrot/$archtype/parrot-rootfs-$archtype.tar.xz"
 rootfs_file="parrot-rootfs-$archtype.tar.xz"
 
 if [ -f "$rootfs_file" ]; then

@@ -6,6 +6,8 @@
 ## ⚠️ Droidmaster modifications: 
 * Change default repositories to `http://mirrors.ustc.edu.cn/parrot`
 * Install basic parrot OS packages by default: `parrot-apps-basics` `parrot-core`
+* Using Parrot OS rootfs from EXALAB instead of RiSecID
+* Removed unnecesary packages
 
 <br>
 <br>
