@@ -233,7 +233,7 @@ setup_repositories(){
 install_parrot_packages(){
 	apt update -y
 	apt upgrade -y
-	apt install parrot-apps-basics parrot-core
+	apt install sudo parrot-apps-basics parrot-core xfce4
 }
 
 package() {
@@ -241,7 +241,6 @@ package() {
     echo -e "${R} [${W}-${R}]${C} Checking required packages..."${W}
 
 	setup_repositories
-	install_parrot_packages
 
     apt install xfce4* -y
     apt install sudo -y
@@ -264,6 +263,7 @@ package() {
         }
     done
     sudo apt update -y
+	install_parrot_packages
 }
 
 fix_broken() {
