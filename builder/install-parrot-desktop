@@ -225,9 +225,9 @@ setup_repositories(){
 	wget http://archive.parrotsec.org/parrot/misc/archive.gpg -O /etc/apt/trusted.gpg.d/parrot-archive-key.asc
 
 	#Setup DNS
-	echo "127.0.0.1 localhost" > parrot-fs/etc/hosts
-	echo "nameserver 8.8.8.8" > parrot-fs/etc/resolv.conf
-	echo "nameserver 8.8.4.4" >> parrot-fs/etc/resolv.conf
+	echo "127.0.0.1 localhost" > /etc/hosts
+	echo "nameserver 8.8.8.8" > /etc/resolv.conf
+	echo "nameserver 8.8.4.4" >> /etc/resolv.conf
 }
 
 install_parrot_packages(){
