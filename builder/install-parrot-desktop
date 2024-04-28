@@ -232,7 +232,7 @@ setup_repositories(){
 	apt update -y
 	apt upgrade -y
 
-	apt install sudo base-files parrot-apps-basics parrot-core
+	apt install sudo base-files parrot-apps-basics parrot-core xfce4 xfce4-terminal
 	
 	apt update -y
 	apt upgrade -y
