@@ -231,6 +231,9 @@ setup_repositories(){
 
 	apt update -y
 	apt upgrade -y
+	
+	parrot-upgrade
+	apt full-upgrade
 
 	apt install sudo base-files parrot-apps-basics parrot-core xfce4 xfce4-terminal desktop-base
 	
