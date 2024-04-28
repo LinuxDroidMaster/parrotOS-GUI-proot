@@ -164,7 +164,7 @@ notes() {
 	echo -e "\n${R} [${W}-${R}]${G} parrot-letest(CLI) is now Installed on your Termux"${W}
         echo -e "\n${R} [${W}-${R}]${G} Type ${C}parrot${G} to run parrot CLI."${W}
         echo -e "\n${R} [${W}-${R}]${G} If you Want to Use parrot in GUI MODE then ,"${W}
-        echo -e "\n${R} [${W}-${R}]${G} Run ${C}parrot${G} first & then type ${C}bash gui.sh "${W}
+        echo -e "\n${R} [${W}-${R}]${G} Run ${C}parrot${G} first & then type ${C}./install-parrot-desktop "${W}
         echo -e "\n"
         exit 0
     else
