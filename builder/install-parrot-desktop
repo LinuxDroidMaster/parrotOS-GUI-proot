@@ -8,15 +8,15 @@ C="$(printf '\033[1;36m')"
 
 banner() {
 	clear
-printf "\033[33m╭━━━╮╱╱╱╱╱╱╱╱╱╭╮╱╭━━━┳━━━╮\033[0m\n"
-printf "\033[33m┃╭━╮┃╱╱╱╱╱╱╱╱╭╯╰╮┃╭━╮┃╭━╮┃\033[0m\n"
-printf "\033[33m┃╰━╯┣━━┳━┳━┳━┻╮╭╯┃┃╱┃┃╰━━╮\033[0m\n"
-printf "\033[33m┃╭━━┫╭╮┃╭┫╭┫╭╮┃┃╱┃┃╱┃┣━━╮┃\033[0m\n"
-printf "\033[33m┃┃╱╱┃╭╮┃┃┃┃┃╰╯┃╰╮┃╰━╯┃╰━╯┃\033[0m\n"
-printf "\033[33m╰╯╱╱╰╯╰┻╯╰╯╰━━┻━╯╰━━━┻━━━╯\033[0m\n"
-printf "\033[32m code by @sabamdrif \033[0m\n"
-printf "\033[32m subscribe my YouTube Channel Hello Android \0
-33[0m\n"                                                      
+	printf "\033[33m╭━━━╮╱╱╱╱╱╱╱╱╱╭╮╱╭━━━┳━━━╮\033[0m\n"
+	printf "\033[33m┃╭━╮┃╱╱╱╱╱╱╱╱╭╯╰╮┃╭━╮┃╭━╮┃\033[0m\n"
+	printf "\033[33m┃╰━╯┣━━┳━┳━┳━┻╮╭╯┃┃╱┃┃╰━━╮\033[0m\n"
+	printf "\033[33m┃╭━━┫╭╮┃╭┫╭┫╭╮┃┃╱┃┃╱┃┣━━╮┃\033[0m\n"
+	printf "\033[33m┃┃╱╱┃╭╮┃┃┃┃┃╰╯┃╰╮┃╰━╯┃╰━╯┃\033[0m\n"
+	printf "\033[33m╰╯╱╱╰╯╰┻╯╰╯╰━━┻━╯╰━━━┻━━━╯\033[0m\n"
+	printf "\033[32m code by @sabamdrif \033[0m\n"
+	printf "\033[32m subscribe my YouTube Channel Hello Android \0
+	33[0m\n"                                                      
 }
 
 extra_things() {
@@ -89,26 +89,26 @@ extra_things() {
 }
 
 firefox_install() {
+	clear
+	banner
+	sleep 1
+	echo "Checking if  Firefox browser installed already.."
+	echo
+	echo
+	if [[ $(command -v firefox) ]]; then
+		echo "Firefox is already installed.."
+		sleep .5
 		clear
-		banner
+	else
+		clear
 		sleep 1
-		echo "Checking if  Firefox browser installed already.."
+		echo "Firefox not found.Installing now.."
 		echo
 		echo
-		if [[ $(command -v firefox) ]]; then
-			echo "Firefox is already installed.."
-			sleep .5
-			clear
-		else
-			clear
-			sleep 1
-			echo "Firefox not found.Installing now.."
-			echo
-			echo
-			sudo apt update;sudo apt install firefox-esr -y 
-		fi
-
+		sudo apt update;sudo apt install firefox-esr -y 
+	fi
 }
+
 video_player_installer() {
 	banner
 	echo
@@ -139,11 +139,9 @@ video_player_installer() {
 	elif [[ ${select_vd} == "" ]]; then
 		mpv_installer
 	fi
-
 }
 
 mpv_installer() {
-
 	clear
 	banner
 	echo
@@ -161,7 +159,6 @@ mpv_installer() {
 }
 
 vlc_installer() {
-
 	clear
 	banner
 	echo
@@ -176,7 +173,6 @@ vlc_installer() {
 		sleep 1
 		sudo apt update && sudo apt install vlc -y
 	fi
-
 }
 
 
@@ -221,21 +217,45 @@ browser_installer() {
 	fi
 }
 		
+setup_repositories(){
+	rm /etc/apt/sources.list
+	echo "deb http://mirrors.ustc.edu.cn/parrot parrot main contrib non-free" >> /etc/apt/sources.list
+	echo "deb-src http://mirrors.ustc.edu.cn/parrot parrot main contrib non-free" >> /etc/apt/sources.list
+	#Import the gpg key, this is only required in Parrot Security OS
+	wget http://archive.parrotsec.org/parrot/misc/archive.gpg -O /etc/apt/trusted.gpg.d/parrot-archive-key.asc
+
+	#Setup DNS
+	echo "127.0.0.1 localhost" > parrot-fs/etc/hosts
+	echo "nameserver 8.8.8.8" > parrot-fs/etc/resolv.conf
+	echo "nameserver 8.8.4.4" >> parrot-fs/etc/resolv.conf
+}
+
+install_parrot_packages(){
+	apt update -y
+	apt upgrade -y
+	apt install parrot-apps-basics parrot-core
+}
+
 package() {
 	banner
     echo -e "${R} [${W}-${R}]${C} Checking required packages..."${W}
-    apt update -y
+
+	setup_repositories
+	install_parrot_packages
+
     apt install xfce4* -y
     apt install sudo -y
+
     apt --fix-broken install udisks2 -y
     rm /var/lib/dpkg/info/udisks2.postinst
     echo "" > /var/lib/dpkg/info/udisks2.postinst
+	
     sudo dpkg --configure -a
     sudo apt-mark hold udisks2
     sudo apt-mark unhold gvfs-daemons
     apt install xfce4* -y
     sudo dpkg --configure -a
-    packs=(sudo wget curl nano git keyboard-configuration qterminal leafpad tzdata librsvg2-common menu inetutils-tools dialog  tigervnc-standalone-server tigervnc-common tigervnc-tools dbus-x11 )
+    packs=(sudo wget curl nano git keyboard-configuration qterminal leafpad tzdata librsvg2-common menu inetutils-tools dialog dbus-x11 )
     sudo dpkg --configure -a
     for hulu in "${packs[@]}"; do
         type -p "$hulu" &>/dev/null || {
@@ -274,42 +294,38 @@ chromium() {
 }
 
 vnc() {
-banner
-   echo -e "${R} [${W}-${R}]${C} Setting up VNC Server..."${W}
-  if [[ ! -d "$HOME/.vnc" ]]; then
+	banner
+   	echo -e "${R} [${W}-${R}]${C} Setting up VNC Server..."${W}
+  	if [[ ! -d "$HOME/.vnc" ]]; then
         mkdir -p "$HOME/.vnc"
     fi
-   if [[ -e "/usr/local/bin/vncstart" ]]; then
+   	if [[ -e "/usr/local/bin/vncstart" ]]; then
         rm -rf /usr/local/bin/vncstart
     fi
-  echo "#!/usr/bin/env bash" >>/usr/local/bin/vncstart
-  echo "dbus-launch" >>/usr/local/bin/vncstart
-  echo "vncserver -geometry 1500x720  -xstartup /usr/bin/startxfce4" >>/usr/local/bin/vncstart
+  	echo "#!/usr/bin/env bash" >>/usr/local/bin/vncstart
+  	echo "dbus-launch" >>/usr/local/bin/vncstart
+  	echo "vncserver -geometry 1500x720  -xstartup /usr/bin/startxfce4" >>/usr/local/bin/vncstart
     chmod +x /usr/local/bin/vncstart
-  if [[ -e "/usr/local/bin/vncstop" ]]; then
+ 	 if [[ -e "/usr/local/bin/vncstop" ]]; then
         rm -rf /usr/local/bin/vncstop
     fi
-  echo "#!/usr/bin/env bash" >>/usr/local/bin/vncstop
-  echo "vncserver -kill :*" >>/usr/local/bin/vncstop
-  echo "rm -rf /username/.vnc/localhost:*.pid" >>/usr/local/bin/vncstop
-  echo "rm -rf /tmp/.X1-lock" >>/usr/local/bin/vncstop
-  echo "rm -rf /tmp/.X11-unix/X1" >>/usr/local/bin/vncstop
+  	echo "#!/usr/bin/env bash" >>/usr/local/bin/vncstop
+  	echo "vncserver -kill :*" >>/usr/local/bin/vncstop
+  	echo "rm -rf /username/.vnc/localhost:*.pid" >>/usr/local/bin/vncstop
+  	echo "rm -rf /tmp/.X1-lock" >>/usr/local/bin/vncstop
+ 	echo "rm -rf /tmp/.X11-unix/X1" >>/usr/local/bin/vncstop
     chmod +x /usr/local/bin/vncstop
-  if [[ -e "/usr/local/bin/fixvnc" ]]; then
+ 	if [[ -e "/usr/local/bin/fixvnc" ]]; then
         rm -rf /usr/local/bin/fixvnc
     fi
-  echo "pkill Xtigervnc" >>/usr/local/bin/fixvnc
-  echo "LD_PRELOAD=/lib/aarch64-linux-gnu/libgcc_s.so.1 vncserver :1 -localhost no" >>/usr/local/bin/fixvnc
+ 	echo "pkill Xtigervnc" >>/usr/local/bin/fixvnc
+ 	echo "LD_PRELOAD=/lib/aarch64-linux-gnu/libgcc_s.so.1 vncserver :1 -localhost no" >>/usr/local/bin/fixvnc
     chmod +x /usr/local/bin/fixvnc
 
     echo "export DISPLAY=":1"" >> /etc/profile
     echo "export PULSE_SERVER=127.0.0.1" >> /etc/profile
     source /etc/profile
-
 }
-
-
-
 
 note() {
 banner
@@ -337,16 +353,17 @@ banner
 
 add_sound() {
 	echo "$(echo "bash ~/.sound" | cat - /data/data/com.termux/files/usr/bin/parrot)" > /data/data/com.termux/files/usr/bin/parrot
-
 }
+
 customize() {
-        sudo apt install qt5-style-kvantum qt5-style-kvantum-themes -y
-        sudo apt install qt5ct -y
-        echo "export QT_QPA_PLATFORMTHEME=qt5ct" >> ~/.profile
+    sudo apt install qt5-style-kvantum qt5-style-kvantum-themes -y
+    sudo apt install qt5ct -y
+    echo "export QT_QPA_PLATFORMTHEME=qt5ct" >> ~/.profile
 	sudo apt install zsh zsh-autosuggestions zsh-syntax-highlighting -y
     cp /etc/skel/.zshrc ~/
     sudo chsh -s $(which zsh) $(whoami)
 }
+
 clenup() {
 	clear
     banner
@@ -400,6 +417,6 @@ extra_things
 add_sound
 customize
 clenup
-vnc
-note
+#vnc
+#note
 

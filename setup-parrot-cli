@@ -139,7 +139,7 @@ install_rootfs() {
     if [[ -e "$PREFIX/var/lib/proot-distro/installed-rootfs/parrot/root/install-parrot-desktop" ]]; then
         chmod +x $PREFIX/var/lib/proot-distro/installed-rootfs/parrot/root/install-parrot-desktop
     else
-        wget https://raw.githubusercontent.com/sabamdarif/parrot-gui/main/builder/install-parrot-desktop
+        wget https://raw.githubusercontent.com/LinuxDroidMaster/parrotOS-GUI-proot/main/builder/install-parrot-desktop
         mv -f install-parrot-desktop $PREFIX/var/lib/proot-distro/installed-rootfs/parrot/root/install-parrot-desktop
         chmod +x $PREFIX/var/lib/proot-distro/installed-rootfs/parrot/root/install-parrot-desktop
     fi
