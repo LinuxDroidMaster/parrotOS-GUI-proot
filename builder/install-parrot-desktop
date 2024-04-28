@@ -233,7 +233,7 @@ setup_repositories(){
 install_parrot_packages(){
 	apt update -y
 	apt upgrade -y
-	apt install sudo parrot-apps-basics parrot-core xfce4
+	apt install sudo parrot-apps-basics parrot-core
 }
 
 package() {
@@ -383,27 +383,17 @@ clenup() {
 
 
 login() {
-    apt autoremove sudo -y
     banner
     read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Input Username [Lowercase] : \e[0m\e[1;96m\en' user
     echo -e "${W}"
     read -p $' \e[1;31m[\e[0m\e[1;77m~\e[0m\e[1;31m]\e[0m\e[1;92m Input Password : \e[0m\e[1;96m\en' pass
     echo -e "${W}"
     useradd -m -s $(which bash) ${user}
-    chmod u+w /etc/sudoers
     echo "${user}:${pass}" | chpasswd
     apt update -y
     apt install sudo -y
-     echo "$user ALL=(ALL:ALL) ALL" >> /etc/sudoers
-    cat <<EOF > "/data/data/com.termux/files/usr/bin/parrot"
-if [ "\$1" == "-r" ]; then
-    proot-distro login parrot
-else
-    proot-distro login --user "$user" parrot
-fi 
-EOF
+    echo "$user ALL=(ALL:ALL) ALL" >> /etc/sudoers
     clear
-
 }
 
 #full_update
