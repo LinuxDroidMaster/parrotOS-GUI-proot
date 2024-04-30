@@ -1,4 +1,7 @@
-
+# Define ANSI color codes
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+	
 rm /etc/apt/sources.list
 echo "deb http://mirrors.ustc.edu.cn/parrot parrot main contrib non-free" >> /etc/apt/sources.list
 echo "deb-src http://mirrors.ustc.edu.cn/parrot parrot main contrib non-free" >> /etc/apt/sources.list
@@ -9,3 +12,17 @@ wget http://archive.parrotsec.org/parrot/misc/archive.gpg -O /etc/apt/trusted.gp
 echo "127.0.0.1 localhost" > /etc/hosts
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 echo "nameserver 8.8.4.4" >> /etc/resolv.conf
+
+apt update
+
+apt install parrot-core -y
+
+apt update
+apt upgrade -y
+
+apt install sudo desktop-base xfce4 xfce4-terminal xfce4-goodies
+
+apt update
+apt install parrot-desktop-mate -y
+apt install locales-all -y
+sudo dpkg-reconfigure locales
