@@ -20,9 +20,9 @@ apt install parrot-core -y
 apt update
 apt upgrade -y
 
-apt install sudo desktop-base xfce4 xfce4-terminal xfce4-goodies
+apt install sudo lightdm desktop-base xfce4 xfce4-terminal xfce4-goodies
 
 apt update
-apt install parrot-desktop-mate -y
+#apt install parrot-desktop-mate -y
 apt install locales-all -y
 sudo dpkg-reconfigure locales
